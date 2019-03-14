@@ -22,7 +22,15 @@ class LoginView {
     parentNode.querySelector('.help-block').textContent = 'Ура! Всё прошло хорошо, ваши данные полность валидные.';
   };
   
-  clickValidate(callback) {
+  invokeValidate(callback) {
     this.$validate.addEventListener("click", callback)
+  }
+  
+  blurEmail(callback) {
+    this.$email.addEventListener("blur", callback)
+  }
+  
+  blurPassword(callback) {
+    this.$password.addEventListener("blur", callback)
   }
 }

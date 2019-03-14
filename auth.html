@@ -3,12 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>auth</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+<header class="container-fluid main-header">
+  <div class="row">
+    <h1>Регистрация</h1>
+  </div>
+</header>
 
-
-
+<div class="container">
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+      <form role="form">
+        <div class="form-group has-success">
+          <label for="exampleInputName">Name</label>
+          <label class="control-label">Успешный ввод</label>
+          <input type="email" class="form-control" id="exampleInputName" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label for="optionsRadios1">Male</label>
+          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+          <label for="optionsRadios2">Female</label>
+          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail">Email</label>
+          <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group has-error">
+          <label for="exampleInputPassword2">Password repeat</label>
+          <label class="control-label">Ввод с ошибкой</label>
+          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password repeat">
+        </div>
+        
+        <input type="hidden" name="_token" value="{{token}}">
+        
+        <button type="submit" class="btn btn-warning">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

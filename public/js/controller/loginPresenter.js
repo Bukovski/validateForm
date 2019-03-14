@@ -44,7 +44,7 @@ class LoginPresenter {
   }
   
   validateClick() {
-    this._view.clickValidate(() => {
+    this._view.invokeValidate(() => {
       const email = this.emailInput();
       const password = this.passwordInput();
       
@@ -62,6 +62,14 @@ class LoginPresenter {
         if (token.length) {
           this._model.getRequest(data, token);
         }
+      } else {
+        this._view.blurEmail(() => {
+          email.validate();
+        });
+        
+        this._view.blurPassword(() => {
+          password.validate();
+        });
       }
     })
   }

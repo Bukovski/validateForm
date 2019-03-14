@@ -18,8 +18,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 const SECRET_KEY = "my_secret_key";
 let _token;
 
-
 app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + '/../index.html'))
+});
+
+app.get("/login", function (req, res) {
   const payload = {
     check:  true
   };
@@ -27,6 +30,20 @@ app.get("/", function (req, res) {
   _token = jwt.sign({ payload }, SECRET_KEY);
   
   fs.readFile(path.join(__dirname + '/../login.html'), 'utf8', (err, data) => {
+    if (err) throw err;
+    
+    res.send(Mustache.render(data, { token: _token }))
+  });
+});
+
+app.get("/auth", function (req, res) {
+  const payload = {
+    check:  true
+  };
+  
+  _token = jwt.sign({ payload }, SECRET_KEY);
+  
+  fs.readFile(path.join(__dirname + '/../auth.html'), 'utf8', (err, data) => {
     if (err) throw err;
     
     res.send(Mustache.render(data, { token: _token }))
