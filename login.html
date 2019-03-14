@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <meta name="csrf-token" content="{{token}}">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styleLogin.css">
+</head>
+<body>
+
+
+<header class="container-fluid main-header">
+  <div class="row">
+    <h1>Авторизация</h1>
+  </div>
+</header>
+
+<main class="container validator-container">
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+      <div class="input-group center-block">
+        <label for="email">Email</label>
+        <input id="email" class="form-control" type="text" placeholder="example@email.com">
+        <span id="email-error-container" class="help-block">Введите адресс вашей электронной почты</span>
+      </div>
+    
+      <div class="input-group center-block">
+        <label for="password">Password</label>
+        <input id="password" class="form-control" type="password" placeholder="******">
+        <span id="password-error-container" class="help-block">Введите ваш пароль</span>
+      </div>
+    
+      <button id="validate" class="btn btn-info" type="button">Войти</button>
+    </div>
+  
+  </div>
+</main>
+
+
+<script src="js/helpers/validator.js"></script>
+<script src="js/model/loginModel.js"></script>
+<script src="js/view/loginView.js"></script>
+<script src="js/controller/loginPresenter.js"></script>
+<script>
+  const model = new Model();
+  const view = new LoginView();
+  const presenter = new LoginPresenter(model, view);
+  
+  window.onload = presenter.validateClick();
+</script>
+</body>
+</html>
