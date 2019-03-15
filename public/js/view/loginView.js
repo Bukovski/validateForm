@@ -1,9 +1,9 @@
 class LoginView {
   constructor() {
-    this.$email = document.getElementById("email");
-    this.$password = document.getElementById("password");
-    this.$validate = document.getElementById("validate");
-    this.$token = document.querySelector('meta[name="csrf-token"]').attributes[1].textContent;
+    this.email = document.getElementById("email");
+    this.password = document.getElementById("password");
+    this.validate = document.getElementById("validate");
+    this.token = document.querySelector('meta[name="csrf-token"]').attributes[1].textContent;
   }
   
   onError() {
@@ -23,14 +23,14 @@ class LoginView {
   };
   
   invokeValidate(callback) {
-    this.$validate.addEventListener("click", callback)
+    this.validate.addEventListener("click", callback)
   }
   
   blurEmail(callback) {
-    this.$email.addEventListener("blur", callback)
+    this.email.addEventListener("blur", callback)
   }
   
   blurPassword(callback) {
-    this.$password.addEventListener("blur", callback)
+    this.password.addEventListener("blur", callback)
   }
 }

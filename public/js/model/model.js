@@ -1,5 +1,14 @@
 class Model {
-  constructor() {}
+  constructor() {
+    this.passwordInput = ""
+  }
+  
+  set authPasswordValue(value) {
+    this.passwordInput = value;
+  }
+  get authPasswordValue() {
+    return this.passwordInput;
+  }
   
   getRequest(data, token) {
     fetch("api/verify", {

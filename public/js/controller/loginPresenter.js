@@ -5,7 +5,7 @@ class LoginPresenter {
   }
   
   emailInput() {
-    return new Validator.init(this._view.$email, {
+    return new Validator.init(this._view.email, {
       rules: {
         min: 5,
         max: 20,
@@ -27,7 +27,7 @@ class LoginPresenter {
       return this.valueEelement === "123qweRTY";
     };
     
-    return new Validator.init(this._view.$password, {
+    return new Validator.init(this._view.password, {
       rules: {
         required: true,
         match: "password",
@@ -57,7 +57,7 @@ class LoginPresenter {
           password: password.valueEelement
         };
         
-        const token = this._view.$token;
+        const token = this._view.token;
         
         if (token.length) {
           this._model.getRequest(data, token);

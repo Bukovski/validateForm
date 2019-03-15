@@ -56,139 +56,15 @@
 
 
 <script src="js/helpers/validator.js"></script>
+<script src="js/model/model.js"></script>
+<script src="js/view/authView.js"></script>
+<script src="js/controller/authPresenter.js"></script>
 <script>
-  const onError = function() {
-    const parentNode = this.element.parentNode;
-    
-    parentNode.classList.add('has-error');
-    parentNode.classList.remove('has-success');
-    parentNode.getElementsByClassName('control-label')[0].textContent = 'Ошибка: ' + this.message;
-  };
-  const onSuccess = function() {
-    const parentNode = this.element.parentNode;
+  const model = new Model();
+  const view = new AuthView();
+  const presenter = new AuthPresenter(model, view);
   
-    parentNode.classList.add('has-success');
-    parentNode.classList.remove('has-error');
-    parentNode.getElementsByClassName('control-label')[0].textContent = 'Ура! Всё прошло хорошо, ваши данные полность валидные.';
-  };
-  
-  const nameInput = new Validator.init(document.getElementById("inputName"), {
-    rules: {
-      min: 3,
-      max: 25,
-      match: 'letters'
-    },
-    messages: {
-      min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
-      max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
-      match: 'Это поле должно содержать только буквы. Значение %data% не подходит'
-    },
-    onError: onError,
-    onSuccess: onSuccess
-  });
-
-  Validator.fn.radioChecked = function() {
-    const parentNode = this.element.parentNode;
-    const radioChecked = parentNode.querySelectorAll("input[type='radio']:checked");
-  
-    return radioChecked;
-  };
-  Validator.fn.radioValidate = function() {
-    return this.radioChecked().length;
-  };
-  Validator.fn.valueRadio = function() {
-    const radioCheck = this.radioChecked()[0];
-    
-    return (radioCheck) ? radioCheck.value : "";
-  };
-  
-  const radioGender = new Validator.init(document.getElementById("optionsRadios1"), {
-    rules: {
-      radioValidate: true
-    },
-    messages: {
-      radioValidate: 'Укажите ваш пол'
-    },
-    onError: onError,
-    onSuccess: onSuccess
-  });
-  
-  const emailInput = new Validator.init(document.getElementById("inputEmail"), {
-    rules: {
-      min: 5,
-      max: 20,
-      match: 'email'
-    },
-    messages: {
-      min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
-      max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
-      match: 'Это поле должно содержать адрес электронной почты. Значение %data% не подходит'
-    },
-    onError: onError,
-    onSuccess: onSuccess
-  });
-  
-  const passwordInput1 = new Validator.init(document.getElementById('inputPassword1'), {
-    rules: {
-      required: true,
-      match: "password"
-    },
-    messages: {
-      required: 'Это поле обязательно для заполнения!',
-      match: 'Пароль должет состоять из цифр, латинских букв (больших и маленьких)',
-    },
-    onError: onError,
-    onSuccess: onSuccess
-  });
-
-
-  Validator.fn.repeatPassword = function() {
-    return this.valueEelement === passwordInput1.valueEelement;
-  };
-  
-  const passwordInput2 = new Validator.init(document.getElementById('inputPassword2'), {
-    rules: {
-      required: true,
-      repeatPassword: true
-    },
-    messages: {
-      required: 'Это поле обязательно для заполнения!',
-      repeatPassword: 'Пароли должны совпадать'
-    },
-    onError: onError,
-    onSuccess: onSuccess
-  });
-
-
-  const submitBtn = document.getElementById("submitBtn");
-
-  submitBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-    
-    nameInput.validate();
-    radioGender.validate();
-    emailInput.validate();
-    passwordInput1.validate();
-    passwordInput2.validate();
-  
-    console.log(
-      nameInput.getValid(),
-      radioGender.getValid(),
-      emailInput.getValid(),
-      passwordInput1.getValid(),
-      passwordInput2.getValid()
-    );
-  
-    console.log(
-      nameInput.valueEelement,
-      radioGender.valueRadio(),
-      emailInput.valueEelement,
-      passwordInput1.valueEelement,
-      passwordInput2.valueEelement
-    );
-    
-  });
-
+  window.onload = presenter.validateClick();
 </script>
 </body>
 </html>
