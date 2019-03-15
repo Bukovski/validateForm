@@ -24,7 +24,7 @@ class LoginPresenter {
   passwordInput() {
     //расширение функционала валидатора
     Validator.fn.password = function() { //если есть даныне из БД, можем сравнить введенные данные
-      return this.valueEelement === "123qweRTY";
+      return this.getValue() === "123qweRTY";
     };
     
     return new Validator.init(this._view.password, {
@@ -52,14 +52,14 @@ class LoginPresenter {
       password.validate();
       
       if (email.getValid() && password.getValid()) {
-        const data = {
-          email: email.valueEelement,
-          password: password.valueEelement
-        };
-        
         const token = this._view.token;
         
         if (token.length) {
+          const data = {
+            email: email.getValue(),
+            password: password.getValue()
+          };
+          
           this._model.getRequest(data, token);
         }
       } else {

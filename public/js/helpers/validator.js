@@ -30,7 +30,7 @@ const Validator = (function () {
     this.options = Object.assign({}, _defaults, options);
     this.element = element;
     this.regExps = _regExps;
-    this.valueEelement = "";
+    this.valueElement = "";
     this.lengthElenet = 0;
     this.isValid = false;
   };
@@ -39,9 +39,9 @@ const Validator = (function () {
   
   fn.validate = function () {
     let isValid = true;
+    const valueElement = this.getValue();
     
-    this.valueEelement = (this.element.value) ? this.element.value.trim() : "";
-    this.lengthElenet = this.valueEelement.length;
+    this.lengthElenet = valueElement.length;
     this.isValid = false;
     
     for (let rule in this.options.rules) {
@@ -50,7 +50,7 @@ const Validator = (function () {
       if (!this[ rule ](param)) {
         isValid = false;
         
-        this.message = _createMessage(this.options.messages[ rule ], { rule: param, data: this.valueEelement });
+        this.message = _createMessage(this.options.messages[ rule ], { rule: param, data: valueElement });
         this.options.onError.call(this);
         
         break;
@@ -62,11 +62,13 @@ const Validator = (function () {
     
     this.isValid = isValid;
   };
+  
   fn.required = function () { return this.lengthElenet > 0 };
   fn.min = function (param) { return this.lengthElenet >= param };
   fn.max = function (param) { return this.lengthElenet <= param };
-  fn.match = function (param) { return this.regExps[ param ].test(this.valueEelement) };
+  fn.match = function (param) { return this.regExps[ param ].test(this.getValue()) };
   fn.getValid = function () { return this.isValid };
+  fn.getValue = function () { return (this.element.value) ? this.element.value.trim() : "" };
   
   return {
     init: Validate,
