@@ -9,7 +9,11 @@ const Validator = (function () {
   
   const _regExps = {
     email: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+    url: /^((https?):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
+    numbers: /^\d+(\.\d{1,2})?$/,
+    digits: /[0-9]*$/,
+    letters: /[a-z][A-Z]*$/
   };
   const _messages = {
     required: 'This field is required',
@@ -36,7 +40,7 @@ const Validator = (function () {
   fn.validate = function () {
     let isValid = true;
     
-    this.valueEelement = this.element.value.trim();
+    this.valueEelement = (this.element.value) ? this.element.value.trim() : "";
     this.lengthElenet = this.valueEelement.length;
     this.isValid = false;
     

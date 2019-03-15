@@ -16,40 +16,179 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-offset-3 col-sm-6">
+    <div class="col-sm-offset-2 col-sm-8">
       <form role="form">
-        <div class="form-group has-success">
-          <label for="exampleInputName">Name</label>
-          <label class="control-label">Успешный ввод</label>
-          <input type="email" class="form-control" id="exampleInputName" placeholder="Enter your name">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <label class="control-label"></label>
+          <input type="text" class="form-control" id="inputName" placeholder="Enter your name">
         </div>
         <div class="form-group">
           <label for="optionsRadios1">Male</label>
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+          <input type="radio" name="optionsRadios" id="optionsRadios1" value="Male">
           <label for="optionsRadios2">Female</label>
-          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+          <input type="radio" name="optionsRadios" id="optionsRadios2" value="Female">
+          <label class="control-label"></label>
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+          <label for="inputEmail">Email</label>
+          <label class="control-label"></label>
+          <input type="text" class="form-control" id="inputEmail" placeholder="Enter email">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <label for="inputPassword1">Password</label>
+          <label class="control-label"></label>
+          <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
         </div>
-        <div class="form-group has-error">
-          <label for="exampleInputPassword2">Password repeat</label>
-          <label class="control-label">Ввод с ошибкой</label>
-          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password repeat">
+        <div class="form-group">
+          <label for="inputPassword2">Password repeat</label>
+          <label class="control-label"></label>
+          <input type="password" class="form-control" id="inputPassword2" placeholder="Password repeat">
         </div>
         
         <input type="hidden" name="_token" value="{{token}}">
-        
-        <button type="submit" class="btn btn-warning">Send</button>
+  
+        <input id="submitBtn" class="btn btn-warning" type="submit" value="Send">
       </form>
     </div>
   </div>
 </div>
 
+
+<script src="js/helpers/validator.js"></script>
+<script>
+  const onError = function() {
+    const parentNode = this.element.parentNode;
+    
+    parentNode.classList.add('has-error');
+    parentNode.classList.remove('has-success');
+    parentNode.getElementsByClassName('control-label')[0].textContent = 'Ошибка: ' + this.message;
+  };
+  const onSuccess = function() {
+    const parentNode = this.element.parentNode;
+  
+    parentNode.classList.add('has-success');
+    parentNode.classList.remove('has-error');
+    parentNode.getElementsByClassName('control-label')[0].textContent = 'Ура! Всё прошло хорошо, ваши данные полность валидные.';
+  };
+  
+  const nameInput = new Validator.init(document.getElementById("inputName"), {
+    rules: {
+      min: 3,
+      max: 25,
+      match: 'letters'
+    },
+    messages: {
+      min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
+      max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
+      match: 'Это поле должно содержать только буквы. Значение %data% не подходит'
+    },
+    onError: onError,
+    onSuccess: onSuccess
+  });
+
+  Validator.fn.radioChecked = function() {
+    const parentNode = this.element.parentNode;
+    const radioChecked = parentNode.querySelectorAll("input[type='radio']:checked");
+  
+    return radioChecked;
+  };
+  Validator.fn.radioValidate = function() {
+    return this.radioChecked().length;
+  };
+  Validator.fn.valueRadio = function() {
+    const radioCheck = this.radioChecked()[0];
+    
+    return (radioCheck) ? radioCheck.value : "";
+  };
+  
+  const radioGender = new Validator.init(document.getElementById("optionsRadios1"), {
+    rules: {
+      radioValidate: true
+    },
+    messages: {
+      radioValidate: 'Укажите ваш пол'
+    },
+    onError: onError,
+    onSuccess: onSuccess
+  });
+  
+  const emailInput = new Validator.init(document.getElementById("inputEmail"), {
+    rules: {
+      min: 5,
+      max: 20,
+      match: 'email'
+    },
+    messages: {
+      min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
+      max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
+      match: 'Это поле должно содержать адрес электронной почты. Значение %data% не подходит'
+    },
+    onError: onError,
+    onSuccess: onSuccess
+  });
+  
+  const passwordInput1 = new Validator.init(document.getElementById('inputPassword1'), {
+    rules: {
+      required: true,
+      match: "password"
+    },
+    messages: {
+      required: 'Это поле обязательно для заполнения!',
+      match: 'Пароль должет состоять из цифр, латинских букв (больших и маленьких)',
+    },
+    onError: onError,
+    onSuccess: onSuccess
+  });
+
+
+  Validator.fn.repeatPassword = function() {
+    return this.valueEelement === passwordInput1.valueEelement;
+  };
+  
+  const passwordInput2 = new Validator.init(document.getElementById('inputPassword2'), {
+    rules: {
+      required: true,
+      repeatPassword: true
+    },
+    messages: {
+      required: 'Это поле обязательно для заполнения!',
+      repeatPassword: 'Пароли должны совпадать'
+    },
+    onError: onError,
+    onSuccess: onSuccess
+  });
+
+
+  const submitBtn = document.getElementById("submitBtn");
+
+  submitBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    
+    nameInput.validate();
+    radioGender.validate();
+    emailInput.validate();
+    passwordInput1.validate();
+    passwordInput2.validate();
+  
+    console.log(
+      nameInput.getValid(),
+      radioGender.getValid(),
+      emailInput.getValid(),
+      passwordInput1.getValid(),
+      passwordInput2.getValid()
+    );
+  
+    console.log(
+      nameInput.valueEelement,
+      radioGender.valueRadio(),
+      emailInput.valueEelement,
+      passwordInput1.valueEelement,
+      passwordInput2.valueEelement
+    );
+    
+  });
+
+</script>
 </body>
 </html>
