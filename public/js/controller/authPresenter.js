@@ -127,7 +127,7 @@ class AuthPresenter {
         if (token.length) {
           const data = {
             name: nameInput.getValue(),
-            gender: radioGender.getValue(),
+            gender: radioGender.radioValue(),
             email: emailInput.getValue(),
             password: passwordInput.getValue()
           };

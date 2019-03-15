@@ -22,8 +22,8 @@ class LoginPresenter {
   }
   
   passwordInput() {
-    //расширение функционала валидатора
-    Validator.fn.password = function() { //если есть даныне из БД, можем сравнить введенные данные
+    //extending the functionality of the validator
+    Validator.fn.password = function() { //if there is data from the database, we can compare the entered data
       return this.getValue() === "123qweRTY";
     };
     
