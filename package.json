@@ -1,12 +1,12 @@
 {
-  "name": "lesson32-validationForm",
+  "name": "js-mvp-form-validation",
   "version": "1.0.0",
   "description": "",
   "main": "home.js",
   "scripts": {
     "start": "node server/index.js"
   },
-  "keywords": [],
+  "keywords": [ "js mvp validation", "js mvp", "js validation", "form validation", "javascript form mvp", "js form no plugins", "js from no libraries", "js nativ validation", "js oop form", "oop validation form" ],
   "author": "",
   "license": "ISC",
   "dependencies": {

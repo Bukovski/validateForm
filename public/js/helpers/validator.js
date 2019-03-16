@@ -15,19 +15,21 @@ const Validator = (function () {
     digits: /[0-9]*$/,
     letters: /[a-z][A-Z]*$/
   };
+  
   const _messages = {
     required: 'This field is required',
     min: 'This field should contain at least %rule% characters',
     max: 'This field should not contain more than %rule% characters',
-    match: 'This field shold countain a valid %rule%'
+    match: 'This field should contain a valid %rule%'
   };
-  const _defaults = {
+  
+  const _defaults = { //default settings
     regExps: _regExps,
     message: _messages
   };
   
   const Validate = function (element, options) {
-    this.options = Object.assign({}, _defaults, options);
+    this.options = Object.assign({}, _defaults, options); //unite all objects into one
     this.element = element;
     this.regExps = _regExps;
     this.valueElement = "";
@@ -37,26 +39,31 @@ const Validator = (function () {
   
   const fn = Validate.prototype;
   
-  fn.validate = function () {
+  fn.validate = function () { //data validation and message generation
     let isValid = true;
     const valueElement = this.getValue();
     
     this.lengthElenet = valueElement.length;
     this.isValid = false;
     
-    for (let rule in this.options.rules) {
-      const param = this.options.rules[ rule ];
-      
-      if (!this[ rule ](param)) {
-        isValid = false;
-        
-        this.message = _createMessage(this.options.messages[ rule ], { rule: param, data: valueElement });
-        this.options.onError.call(this);
-        
-        break;
-      }
-      if (isValid) {
-        this.options.onSuccess.call(this);
+    const optionRules = this.options.rules;
+    
+    for (let rule in optionRules) {
+      if (optionRules.hasOwnProperty(rule)) {
+        const param = optionRules[ rule ];
+  
+        if (!this[ rule ](param)) {
+          isValid = false;
+    
+          this.message = _createMessage(this.options.messages[ rule ], { rule: param, data: valueElement }); //takes a template from settings and replaces it with error data
+          this.options.onError.call(this); //pass the template to the error output
+    
+          break;
+        }
+  
+        if (isValid) {
+          this.options.onSuccess.call(this); //is all right. Call the success message
+        }
       }
     }
     

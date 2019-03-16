@@ -11,7 +11,7 @@ class LoginView {
     
     parentNode.classList.add('has-error');
     parentNode.classList.remove('has-success');
-    parentNode.querySelector('.help-block').textContent = 'Ошибка: ' + this.message;
+    parentNode.querySelector('.help-block').textContent = 'Error: ' + this.message;
   };
   
   onSuccess() {
@@ -19,7 +19,7 @@ class LoginView {
     
     parentNode.classList.add('has-success');
     parentNode.classList.remove('has-error');
-    parentNode.querySelector('.help-block').textContent = 'Ура! Всё прошло хорошо, ваши данные полность валидные.';
+    parentNode.querySelector('.help-block').textContent = 'Data is valid';
   };
   
   invokeValidate(callback) {

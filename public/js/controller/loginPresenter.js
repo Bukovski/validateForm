@@ -7,14 +7,14 @@ class LoginPresenter {
   emailInput() {
     return new Validator.init(this._view.email, {
       rules: {
-        min: 5,
-        max: 20,
+        min: 7,
+        max: 35,
         match: 'email'
       },
       messages: {
-        min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
-        max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
-        match: 'Это поле должно содержать адрес электронной почты. Значение %data% не подходит'
+        min: 'This field must contain a minimum of %rule% characters. The value of %data% not suitable',
+        max: 'This field must contain a maximum of %rule% characters. The value of %data% not suitable',
+        match: 'This field must contain a valid email address. The value of %data% not suitable'
       },
       onError: this._view.onError,
       onSuccess: this._view.onSuccess
@@ -22,21 +22,18 @@ class LoginPresenter {
   }
   
   passwordInput() {
-    //extending the functionality of the validator
-    Validator.fn.password = function() { //if there is data from the database, we can compare the entered data
-      return this.getValue() === "123qweRTY";
-    };
-    
     return new Validator.init(this._view.password, {
       rules: {
         required: true,
-        match: "password",
-        // password: true
+        min: 6,
+        max: 25,
+        match: "password"
       },
       messages: {
-        required: 'Это поле обязательно для заполнения!',
-        match: 'Пароль должет состоять из цифр, латинских букв (больших и маленьких)',
-        // password: 'Пароль должет быть 123qweRTY Значение "%data%" не подходит'
+        required: 'This field must be required!',
+        min: 'this field must contain a minimum of %rule% characters',
+        max: 'this field must contain a maximum of %rule% characters',
+        match: 'password must consist of digits, letters (large and small) 123qweRTY'
       },
       onError: this._view.onError,
       onSuccess: this._view.onSuccess

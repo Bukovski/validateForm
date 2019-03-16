@@ -11,7 +11,7 @@ class AuthView {
   
   onError(message) {
     return function () {
-      const customMessage = (message) ? message : 'Ошибка: ';
+      const customMessage = (message) ? message : 'Error: ';
       
       const parentNode = this.element.parentNode;
   
@@ -27,7 +27,7 @@ class AuthView {
   
       parentNode.classList.add('has-success');
       parentNode.classList.remove('has-error');
-      parentNode.getElementsByClassName('control-label')[ 0 ].textContent = (message) ? message : 'Ура! Всё прошло хорошо, ваши данные полность валидные.';
+      parentNode.getElementsByClassName('control-label')[ 0 ].textContent = (message) ? message : 'Data is valid';
     }
   };
   

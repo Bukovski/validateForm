@@ -7,14 +7,14 @@ class AuthPresenter {
   nameInput() {
     return new Validator.init(this._view.name, {
       rules: {
-        min: 3,
+        min: 2,
         max: 25,
         match: 'letters'
       },
       messages: {
-        min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
-        max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
-        match: 'Это поле должно содержать только буквы. Значение %data% не подходит'
+        min: 'This field must contain a minimum of %rule% characters. The value of %data% not suitable',
+        max: 'This field must contain a maximum of %rule% characters. The value of %data% not suitable',
+        match: 'This field must contain only letters. The value of %data% not suitable'
       },
       onError: this._view.onError(),
       onSuccess: this._view.onSuccess()
@@ -43,24 +43,24 @@ class AuthPresenter {
         radioValidate: true
       },
       messages: {
-        radioValidate: 'Укажите ваш пол'
+        radioValidate: 'Specify your gender'
       },
       onError: this._view.onError(),
-      onSuccess: this._view.onSuccess("Пол был выбран")
+      onSuccess: this._view.onSuccess("Gender was selected")
     });
   }
   
   emailInput() {
     return new Validator.init(this._view.email, {
       rules: {
-        min: 5,
-        max: 20,
+        min: 7,
+        max: 35,
         match: 'email'
       },
       messages: {
-        min: 'Это поле должно содержать минимум %rule% символов. Значение %data% не подходит',
-        max: 'Это поле должно содержать максимум %rule% символов. Значение %data% не подходит',
-        match: 'Это поле должно содержать адрес электронной почты. Значение %data% не подходит'
+        min: 'This field must contain a minimum of %rule% characters. The value of %data% not suitable',
+        max: 'This field must contain a maximum of %rule% characters. The value of %data% not suitable',
+        match: 'This field must contain a valid email address. The value of %data% not suitable'
       },
       onError: this._view.onError(),
       onSuccess: this._view.onSuccess()
@@ -71,11 +71,15 @@ class AuthPresenter {
     return new Validator.init(this._view.password, {
       rules: {
         required: true,
+        min: 6,
+        max: 25,
         match: "password"
       },
       messages: {
-        required: 'Это поле обязательно для заполнения!',
-        match: 'Пароль должет состоять из цифр, латинских букв (больших и маленьких)'
+        required: 'This field must be required!',
+        min: 'this field must contain a minimum of %rule% characters',
+        max: 'this field must contain a maximum of %rule% characters',
+        match: 'password must consist of digits, letters (large and small) 123qweRTY'
       },
       onError: this._view.onError(),
       onSuccess: this._view.onSuccess()
@@ -90,13 +94,17 @@ class AuthPresenter {
     return new Validator.init(this._view.passwordRepeat, {
       rules: {
         required: true,
+        min: 6,
+        max: 25,
         match: "password",
         repeatPassword: true
       },
       messages: {
-        required: 'Это поле обязательно для заполнения!',
-        match: 'Пароль должет состоять из цифр, латинских букв (больших и маленьких)',
-        repeatPassword: 'Пароли должны совпадать'
+        required: 'This field must be required!',
+        min: 'this field must contain a minimum of %rule% characters',
+        max: 'this field must contain a maximum of %rule% characters',
+        match: 'password must consist of digits, letters (large and small) 123qweRTY',
+        repeatPassword: 'Passwords must match'
       },
       onError: this._view.onError(),
       onSuccess: this._view.onSuccess()
